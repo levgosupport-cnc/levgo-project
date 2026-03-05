@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EconoView - 経済情報ダッシュボード</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <div class="logo">
+          <span class="logo-icon">E</span>
+          <span class="logo-text">EconoView</span>
+        </div>
+        <nav class="nav">
+          <a href="#indicators" class="nav-link">経済指標</a>
+          <a href="#markets" class="nav-link">市場</a>
+          <a href="#currency" class="nav-link">為替</a>
+          <a href="#news" class="nav-link">ニュース</a>
+        </nav>
+        <div class="header-meta">
+          <span class="live-badge">LIVE</span>
+          <span class="update-time" id="update-time"></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero-title">日本・世界の経済指標を<br />リアルタイムで把握</h1>
+      <p class="hero-sub">GDP・インフレ・雇用・株式市場・為替レートを一画面で確認</p>
+    </div>
+  </section>
+
+  <!-- Economic Indicators -->
+  <section class="section" id="indicators">
+    <div class="container">
+      <h2 class="section-title">主要経済指標</h2>
+      <div class="indicators-grid">
+        <div class="card indicator-card">
+          <div class="card-label">日本 GDP 成長率</div>
+          <div class="card-value" id="gdp-jp">+1.9%</div>
+          <div class="card-change positive">前期比 +0.4%</div>
+          <div class="card-period">2025年 Q4</div>
+        </div>
+        <div class="card indicator-card">
+          <div class="card-label">消費者物価指数 (CPI)</div>
+          <div class="card-value" id="cpi">+2.8%</div>
+          <div class="card-change negative">前月比 +0.3%</div>
+          <div class="card-period">2026年 2月</div>
+        </div>
+        <div class="card indicator-card">
+          <div class="card-label">完全失業率</div>
+          <div class="card-value" id="unemployment">2.5%</div>
+          <div class="card-change positive">前月比 -0.1%</div>
+          <div class="card-period">2026年 1月</div>
+        </div>
+        <div class="card indicator-card">
+          <div class="card-label">政策金利 (日銀)</div>
+          <div class="card-value" id="interest-rate">0.50%</div>
+          <div class="card-change neutral">据え置き</div>
+          <div class="card-period">2026年 1月</div>
+        </div>
+        <div class="card indicator-card">
+          <div class="card-label">経常収支</div>
+          <div class="card-value" id="current-account">+3.2兆円</div>
+          <div class="card-change positive">前年比 +12%</div>
+          <div class="card-period">2025年 12月</div>
+        </div>
+        <div class="card indicator-card">
+          <div class="card-label">米国 GDP 成長率</div>
+          <div class="card-value" id="gdp-us">+2.3%</div>
+          <div class="card-change negative">前期比 -0.2%</div>
+          <div class="card-period">2025年 Q4</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Markets -->
+  <section class="section section-dark" id="markets">
+    <div class="container">
+      <h2 class="section-title">株式市場</h2>
+      <div class="markets-grid">
+        <div class="market-card" id="nikkei-card">
+          <div class="market-name">日経平均</div>
+          <div class="market-value" id="nikkei-val">38,421.50</div>
+          <div class="market-change positive" id="nikkei-chg">+234.10 (+0.61%)</div>
+          <canvas class="spark-chart" id="chart-nikkei" width="200" height="50"></canvas>
+        </div>
+        <div class="market-card" id="topix-card">
+          <div class="market-name">TOPIX</div>
+          <div class="market-value" id="topix-val">2,712.38</div>
+          <div class="market-change positive" id="topix-chg">+18.22 (+0.68%)</div>
+          <canvas class="spark-chart" id="chart-topix" width="200" height="50"></canvas>
+        </div>
+        <div class="market-card" id="dow-card">
+          <div class="market-name">NYダウ</div>
+          <div class="market-value" id="dow-val">43,840.30</div>
+          <div class="market-change negative" id="dow-chg">-156.80 (-0.36%)</div>
+          <canvas class="spark-chart" id="chart-dow" width="200" height="50"></canvas>
+        </div>
+        <div class="market-card" id="nasdaq-card">
+          <div class="market-name">NASDAQ</div>
+          <div class="market-value" id="nasdaq-val">19,204.67</div>
+          <div class="market-change negative" id="nasdaq-chg">-98.44 (-0.51%)</div>
+          <canvas class="spark-chart" id="chart-nasdaq" width="200" height="50"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Currency -->
+  <section class="section" id="currency">
+    <div class="container">
+      <h2 class="section-title">為替レート</h2>
+      <div class="currency-table-wrap">
+        <table class="currency-table">
+          <thead>
+            <tr>
+              <th>通貨ペア</th>
+              <th>レート</th>
+              <th>前日比</th>
+              <th>高値</th>
+              <th>安値</th>
+            </tr>
+          </thead>
+          <tbody id="currency-body">
+            <tr>
+              <td class="pair-cell"><span class="pair-flag">JP</span> USD/JPY</td>
+              <td class="rate-cell">149.32</td>
+              <td class="change-cell negative">-0.48 (-0.32%)</td>
+              <td>150.01</td>
+              <td>148.87</td>
+            </tr>
+            <tr>
+              <td class="pair-cell"><span class="pair-flag">EU</span> EUR/JPY</td>
+              <td class="rate-cell">161.74</td>
+              <td class="change-cell positive">+0.82 (+0.51%)</td>
+              <td>162.10</td>
+              <td>160.95</td>
+            </tr>
+            <tr>
+              <td class="pair-cell"><span class="pair-flag">GB</span> GBP/JPY</td>
+              <td class="rate-cell">188.60</td>
+              <td class="change-cell positive">+0.34 (+0.18%)</td>
+              <td>189.20</td>
+              <td>187.90</td>
+            </tr>
+            <tr>
+              <td class="pair-cell"><span class="pair-flag">EU</span> EUR/USD</td>
+              <td class="rate-cell">1.0832</td>
+              <td class="change-cell positive">+0.0041 (+0.38%)</td>
+              <td>1.0851</td>
+              <td>1.0790</td>
+            </tr>
+            <tr>
+              <td class="pair-cell"><span class="pair-flag">CN</span> USD/CNH</td>
+              <td class="rate-cell">7.2341</td>
+              <td class="change-cell negative">-0.0128 (-0.18%)</td>
+              <td>7.2510</td>
+              <td>7.2280</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- GDP Comparison Chart -->
+  <section class="section section-dark">
+    <div class="container">
+      <h2 class="section-title">主要国 GDP 成長率比較</h2>
+      <div class="bar-chart-wrap">
+        <div class="bar-chart" id="gdp-bar-chart"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section class="section" id="news">
+    <div class="container">
+      <h2 class="section-title">経済ニュース</h2>
+      <div class="news-grid">
+        <article class="news-card news-featured">
+          <div class="news-tag">日銀</div>
+          <h3 class="news-title">日銀、追加利上げを年内2回実施の可能性を示唆 — 総裁会見</h3>
+          <p class="news-body">植田総裁は本日の記者会見で、物価目標の持続的達成が視野に入ってきたとし、年内に2回程度の追加利上げを検討する可能性があると述べた。</p>
+          <div class="news-meta">
+            <span class="news-time">2時間前</span>
+            <span class="news-source">日本経済新聞</span>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="news-tag">米国</div>
+          <h3 class="news-title">米雇用統計、予想を下回る — 利下げ期待が再燃</h3>
+          <p class="news-body">2月の米非農業部門雇用者数は前月比+14万人と市場予想+18万人を下回り、連邦準備制度の利下げ観測が強まった。</p>
+          <div class="news-meta">
+            <span class="news-time">4時間前</span>
+            <span class="news-source">Bloomberg</span>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="news-tag">原油</div>
+          <h3 class="news-title">原油価格、OPEC+の減産維持決定を受け上昇</h3>
+          <p class="news-body">WTI原油は1バレル=$78.40まで上昇。OPECプラスが第2四半期も自主減産を継続すると決定した。</p>
+          <div class="news-meta">
+            <span class="news-time">6時間前</span>
+            <span class="news-source">Reuters</span>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="news-tag">中国</div>
+          <h3 class="news-title">中国、2026年成長目標を「5%前後」に設定</h3>
+          <p class="news-body">全国人民代表大会で発表された政府活動報告によると、今年の実質GDP成長率目標は昨年と同水準の5%前後に設定された。</p>
+          <div class="news-meta">
+            <span class="news-time">8時間前</span>
+            <span class="news-source">Nikkei Asia</span>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="news-tag">国内</div>
+          <h3 class="news-title">春闘、大手製造業で平均5.2%の賃上げ回答</h3>
+          <p class="news-body">連合の集計によると、大手製造業の賃上げ回答は平均5.2%と、3年連続で5%台を維持。個人消費の回復への期待が高まる。</p>
+          <div class="news-meta">
+            <span class="news-time">10時間前</span>
+            <span class="news-source">毎日新聞</span>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="news-tag">半導体</div>
+          <h3 class="news-title">半導体市場、2026年は過去最高の売上高を更新か</h3>
+          <p class="news-body">世界半導体市場統計(WSTS)の予測によれば、AI需要を背景に2026年の世界半導体売上高は前年比+15%増となる見通し。</p>
+          <div class="news-meta">
+            <span class="news-time">12時間前</span>
+            <span class="news-source">WSTS</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="logo-icon">E</span>
+          <span class="logo-text">EconoView</span>
+        </div>
+        <p class="footer-note">※ 表示されているデータはデモ用のサンプルデータです。投資判断の参考としないでください。</p>
+        <p class="footer-copy">&copy; 2026 EconoView. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
